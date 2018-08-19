@@ -18,7 +18,7 @@
               <%for (Noticia noticia : noticias) {%>
               
                <div class="col-sm-12 col-md-6 col-lg-3 my-4">
-                   <a href="ServletNoticiaQuery?id=<%=noticia.getId()%>" style="text-decoration: none">
+                   <a href="ServletGetNoticia?id=<%=noticia.getId()%>" style="text-decoration: none">
                     <div class="card">
                         <img class="card-img"  style="height: 179.84px;" src=<%=noticia.getImagem()%>>
                         <div class="card-body text-dark" style="height: 325px;">

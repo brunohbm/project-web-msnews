@@ -7,22 +7,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Bruno Henrique Bosco Marques
- */
-public class ServletDeletaNoticia extends HttpServlet {
+public class ServletDelNoticia extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
-        NoticiaController noticiaContr = new NoticiaController();
+            throws ServletException, IOException {          
+        NoticiaController noticiaCtr = new NoticiaController();
         String id = request.getParameter("noticia");
         if (id == null) {        
-            response.sendRedirect("index.jsp?mensagem=Erro");                
+            response.sendRedirect("index.jsp?mensagem=Erro ao deletar!!");                
         } else {        
-            noticiaContr.delNoticia(id);
-            response.sendRedirect("index.jsp?mensagem=Deletado");
+            noticiaCtr.delNoticia(id);
+            response.sendRedirect("index.jsp?mensagem=Deletado com sucesso");
         }
     }  
     

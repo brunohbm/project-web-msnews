@@ -9,76 +9,76 @@
         <url-pattern>/index.jsp</url-pattern>
     </filter-mapping>
     <servlet>
-        <servlet-name>ServletSaveAssunto</servlet-name>
-        <servlet-class>br.com.bruno.servlets.ServletSaveAssunto</servlet-class>
+        <servlet-name>ServletSavAssunto</servlet-name>
+        <servlet-class>br.com.bruno.servlets.ServletSavAssunto</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletDelAssunto</servlet-name>
         <servlet-class>br.com.bruno.servlets.ServletDelAssunto</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletSaveNoticia</servlet-name>
-        <servlet-class>br.com.bruno.servlets.ServletSaveNoticia</servlet-class>
+        <servlet-name>ServletSavNoticia</servlet-name>
+        <servlet-class>br.com.bruno.servlets.ServletSavNoticia</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletAssuntoQuery</servlet-name>
-        <servlet-class>br.com.bruno.servlets.ServletAssuntoQuery</servlet-class>
+        <servlet-name>ServletGetAssunto</servlet-name>
+        <servlet-class>br.com.bruno.servlets.ServletGetAssunto</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletNoticiaQuery</servlet-name>
-        <servlet-class>br.com.bruno.servlets.ServletNoticiaQuery</servlet-class>
+        <servlet-name>ServletGetNoticia</servlet-name>
+        <servlet-class>br.com.bruno.servlets.ServletGetNoticia</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletLogin</servlet-name>
         <servlet-class>br.com.bruno.servlets.ServletLogin</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UserSaveServlet</servlet-name>
-        <servlet-class>br.com.bruno.servlets.UserSaveServlet</servlet-class>
+        <servlet-name>ServletSavUsuario</servlet-name>
+        <servlet-class>br.com.bruno.servlets.ServletSavUsuario</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UserDeleteServlet</servlet-name>
-        <servlet-class>br.com.bruno.servlets.UserDeleteServlet</servlet-class>
+        <servlet-name>ServletDelUsuario</servlet-name>
+        <servlet-class>br.com.bruno.servlets.ServletDelUsuario</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletDeletaNoticia</servlet-name>
-        <servlet-class>br.com.bruno.servlets.ServletDeletaNoticia</servlet-class>
+        <servlet-name>ServletDelNoticia</servlet-name>
+        <servlet-class>br.com.bruno.servlets.ServletDelNoticia</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>ServletSaveAssunto</servlet-name>
-        <url-pattern>/ServletSaveAssunto</url-pattern>
+        <servlet-name>ServletSavAssunto</servlet-name>
+        <url-pattern>/ServletSavAssunto</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletDelAssunto</servlet-name>
         <url-pattern>/ServletDelAssunto</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletSaveNoticia</servlet-name>
-        <url-pattern>/ServletSaveNoticia</url-pattern>
+        <servlet-name>ServletSavNoticia</servlet-name>
+        <url-pattern>/ServletSavNoticia</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletAssuntoQuery</servlet-name>
-        <url-pattern>/ServletAssuntoQuery</url-pattern>
+        <servlet-name>ServletGetAssunto</servlet-name>
+        <url-pattern>/ServletGetAssunto</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletNoticiaQuery</servlet-name>
-        <url-pattern>/ServletNoticiaQuery</url-pattern>
+        <servlet-name>ServletGetNoticia</servlet-name>
+        <url-pattern>/ServletGetNoticia</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletLogin</servlet-name>
         <url-pattern>/ServletLogin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UserSaveServlet</servlet-name>
-        <url-pattern>/UserSaveServlet</url-pattern>
+        <servlet-name>ServletSavUsuario</servlet-name>
+        <url-pattern>/ServletSavUsuario</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UserDeleteServlet</servlet-name>
-        <url-pattern>/UserDeleteServlet</url-pattern>
+        <servlet-name>ServletDelUsuario</servlet-name>
+        <url-pattern>/ServletDelUsuario</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletDeletaNoticia</servlet-name>
-        <url-pattern>/ServletDeletaNoticia</url-pattern>
+        <servlet-name>ServletDelNoticia</servlet-name>
+        <url-pattern>/ServletDelNoticia</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.bruno.banco;
 
 import br.com.bruno.modelos.Noticia;
@@ -20,34 +15,39 @@ import java.util.ArrayList;
  */
 public class NoticiaController {
     
-     public int getID() {
+    private Connection connection;
+    private PreparedStatement prepStatment;
+    private Statement statement;
+    private ResultSet resultSet;
+    private AssuntoController assuntoCtr = new AssuntoController();
+    
+     private int getID() {
         try {
-            Connection con = Conexao.getConexao();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT max(id) FROM noticia");
-            rs.first();
-            int id = rs.getInt("max(id)") + 1;  
+            setStatment("SELECT max(id) FROM noticia");
+            resultSet.first();
+            int id = resultSet.getInt("max(id)") + 1;  
             Conexao.FecharConexao();
             return id;         
-        } catch (SQLException e) {
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);
             return 0;
         }        
     }
      
      public ArrayList<Noticia> getNoticiasByAssunto(String id) {
          if(id.equals("0")){
-             return getNoticias(false);
+            return getNoticias(false);
          }
+         
          ArrayList<Noticia> noticias = new ArrayList<>();
          try {
-            Connection con = Conexao.getConexao();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM noticia WHERE id_assunto = " + id + " ORDER BY data_hora DESC");
-             fillArray(noticias, rs);
-             Conexao.FecharConexao();
-         } catch (SQLException SQLex) {
-             System.out.println(SQLex);
+            setStatment("SELECT * FROM noticia WHERE id_assunto = " + id + " ORDER BY data_hora DESC");
+            fillArray(noticias, resultSet);
+            Conexao.FecharConexao();
+         } catch (Exception ex) {
+            System.out.println(ex);
          }
+         
          return noticias;
      }          
      
@@ -58,70 +58,62 @@ public class NoticiaController {
              s = "LIMIT 12";
          }                
         try {           
-            Connection con = Conexao.getConexao();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM noticia ORDER BY data_hora DESC " + s);            
-            fillArray(noticias, rs);
+            setStatment("SELECT * FROM noticia ORDER BY data_hora DESC " + s);
+            fillArray(noticias, resultSet);
             Conexao.FecharConexao();
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
         return noticias;
     }
      
      public Noticia getNoticia (String id) {
-        Noticia n = new Noticia();
+        Noticia noticia = new Noticia();
         try {
-            AssuntoController assCtr = new AssuntoController();
-            Connection con = Conexao.getConexao();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM noticia WHERE id = " + id);                         
-                rs.first();
-                n.setId(rs.getInt("id"));
-                n.setAssunto(assCtr.getAssunto(rs.getInt("id_assunto")));
-                n.setLegenda(rs.getString("legenda"));
-                n.setResumo(rs.getString("resumo"));
-                n.setDescricao(rs.getString("descricao"));
-                n.setData(rs.getDate("data_hora"));
-                n.setImagem(rs.getString("imagem"));               
+            setStatment("SELECT * FROM noticia WHERE id = " + id);
+            resultSet.first();
+            noticia.setId(resultSet.getInt("id"));
+            noticia.setAssunto(assuntoCtr.getAssunto(resultSet.getInt("id_assunto")));
+            noticia.setLegenda(resultSet.getString("legenda"));
+            noticia.setResumo(resultSet.getString("resumo"));
+            noticia.setDescricao(resultSet.getString("descricao"));
+            noticia.setData(resultSet.getDate("data_hora"));
+            noticia.setImagem(resultSet.getString("imagem"));               
             
             Conexao.FecharConexao();
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);
         }
-        return n;
+        return noticia;
     }
      
      public boolean saveNoticia (Noticia noticia) {
-         boolean test = false;
          try {
-             Connection con = Conexao.getConexao();
-             PreparedStatement pst = con.prepareStatement("INSERT INTO noticia ("
+             setPreparedStatment(("INSERT INTO noticia ("
                      + "id,id_assunto,legenda,resumo,descricao,imagem) "
-                     + "VALUES (?,?,?,?,?,?)");
-             pst.setInt(1, getID());
-             pst.setInt(2, noticia.getAssunto().getId());
-             pst.setString(3, noticia.getLegenda());
-             pst.setString(4, noticia.getResumo());
-             pst.setString(5, noticia.getDescricao());
-             pst.setString(6, noticia.getImagem());  
-             pst.execute();
+                     + "VALUES (?,?,?,?,?,?)"));
+             prepStatment.setInt(1, getID());
+             prepStatment.setInt(2, noticia.getAssunto().getId());
+             prepStatment.setString(3, noticia.getLegenda());
+             prepStatment.setString(4, noticia.getResumo());
+             prepStatment.setString(5, noticia.getDescricao());
+             prepStatment.setString(6, noticia.getImagem());  
+             prepStatment.execute();
              Conexao.FecharConexao();
-             test = true;
-         } catch (SQLException e) {
-             System.out.println(e);
+             return true;
+         } catch (SQLException sqlEx) {
+             System.out.println(sqlEx);
+             return false;
          }
-         
-         return test;
      }
      
       public void delNoticia(String id) {
         try {
-            Connection con = Conexao.getConexao();
-            Statement st = con.createStatement();
-            st.execute("DELETE FROM noticia WHERE id = " + id);
-        } catch (SQLException e) {
-            System.out.println(e);
+            connection = Conexao.getConexao();
+            statement = connection.createStatement();
+            statement.execute("DELETE FROM noticia WHERE id = " + id);  
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);
         }
         
     }
@@ -146,5 +138,24 @@ public class NoticiaController {
           }
           
       }
+      
+    private void setStatment(String query){
+       try {
+            connection = Conexao.getConexao();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);
+        }
+    }
+    
+    private void setPreparedStatment(String prepareSQL){
+        try {
+            connection = Conexao.getConexao(); 
+            prepStatment = connection.prepareStatement(prepareSQL);
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);
+        }
+    }
     
 }

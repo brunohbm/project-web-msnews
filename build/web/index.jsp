@@ -5,7 +5,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%!
-    NoticiaController notContr = new NoticiaController();
+    NoticiaController noticiaCtr = new NoticiaController();
     UserController userContr = new UserController();
 %>
 
@@ -25,7 +25,7 @@
             <div class="card">
                 <div class="card-header">Noticia</div>
                 <div class="card-body">
-                    <form action="ServletSaveNoticia" method="POST">
+                    <form action="ServletSavNoticia" method="POST">
                         <div class="row">
                              <div class="col-4">
                                 <div class="form-group">                    
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="textareaResumo">Resumo</label>
-                                    <textarea class="form-control" id="textareaResumo" rows="6" maxlength="266"></textarea>
+                                    <textarea class="form-control" id="textareaResumo" rows="6" maxlength="266" name="resumo"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group">
@@ -59,7 +59,7 @@
                             <div class="col-8">
                                 <div class="form-group">
                                     <label for="textareaDescricao">Descrição</label>
-                                    <textarea class="form-control" id="textareaDescricao" rows="15"></textarea>
+                                    <textarea class="form-control" id="textareaDescricao" rows="15" name="descricao"></textarea>
                                 </div>
                             </div>          
                         </div>
@@ -73,7 +73,7 @@
             <div class="card">
                 <div class="card-header">Assunto</div>
                 <div class="card-body">
-                    <form action="ServletSaveAssunto" method="POST">
+                    <form action="ServletSavAssunto" method="POST">
                         <div class="form-group mt-4">
                             <label for="inputNome">Nome</label>
                             <div class="input-group mb-5">                        
@@ -91,7 +91,7 @@
             <div class="card">
                 <div class="card-header">Usuário</div>
                 <div class="card-body">
-                    <form action="UserSaveServlet" method="POST">
+                    <form action="ServletSavUsuario" method="POST">
                         <div class="form-group">
                             <label for="inputLogin">Login</label>
                             <input type="text" class="form-control" name="login" id="inputLogin">
@@ -115,11 +115,11 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-4">
-                            <form action="ServletDeletaNoticia" method="POST">
+                            <form action="ServletDelNoticia" method="POST">
                                 <label for="selectDelNoticia">Noticia</label>
                                 <div class="input-group">                                    
                                     <select class="custom-select" id="selectDelNoticia" name="noticia">
-                                        <% for(Noticia noticia : notContr.getNoticias(false)) {%>                    
+                                        <% for(Noticia noticia : noticiaCtr.getNoticias(false)) {%>                    
                                         <option value=<%=noticia.getId()%>> <%=noticia.getAssunto().getNome()%> - <%=noticia.getLegenda()%></option>                
                                         <% } %> 
                                     </select>
@@ -130,7 +130,7 @@
                             </form>
                         </div>
                         <div class="col-4">
-                            <form action="UserDeleteServlet" method="POST">
+                            <form action="ServletDelUsuario" method="POST">
                                 <label for="selectDelUsuario">Usuário</label>
                                 <div class="input-group">
                                     <select class="custom-select" id="selectDelUsuario" name="user">

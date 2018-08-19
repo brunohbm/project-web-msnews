@@ -19,7 +19,7 @@
   </head>
   <body style="background-color: #E8E8E8">  
       <nav class="navbar navbar-expand-lg navbar-light shadow-sm justify-content-between" style="background-color: white">
-    <a class="navbar-brand ml-3" href="home.jsp">MS News</a>
+          <a class="navbar-brand ml-3" href="home.jsp"><b class="text-muted">MS News</b></a>
     <ul class="navbar-nav">
       <li class="nav-item dropdown dropleft mr-3">
           <button style="background-color: transparent" class="btn" type="button" id="dropdownAssuntoButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -28,9 +28,9 @@
       <div class="dropdown-menu text-center" aria-labelledby="dropdownAssuntoButton">   
           <h6 class="dropdown-header">Assuntos</h6>          
           <% for (Assunto ass : assuntos) {%>                    
-          <a class="dropdown-item" href="ServletAssuntoQuery?id=<%=ass.getId()%>"><%=ass.getNome()%></a>          
+          <a class="dropdown-item" href="ServletGetAssunto?id=<%=ass.getId()%>"><%=ass.getNome()%></a>          
         <%}%>
-          <a class="dropdown-item" href="ServletAssuntoQuery?id=0">Todos</a>  
+          <a class="dropdown-item" href="ServletGetAssunto?id=0">Todos</a>  
       </div>    
       </li>
     </ul>

@@ -6,8 +6,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%!
-    NoticiaController nc = new NoticiaController();
-    ArrayList<Noticia> noticias = nc.getNoticias(true);
+    NoticiaController noticiaCtr = new NoticiaController();
+    ArrayList<Noticia> noticias = noticiaCtr.getNoticias(true);
 %>
 
 <%@include file="nav.jsp" %>    
@@ -32,7 +32,7 @@
           <div class="row m-0">
               <%for (int cards = 0; cards < 4; cards++) { %>
               <div class="col-sm-12 col-md-6 col-lg-3 my-4">
-                  <a href="ServletNoticiaQuery?id=<%=noticias.get(cards + indiceControl).getId()%>" style="text-decoration: none">
+                  <a href="ServletGetNoticia?id=<%=noticias.get(cards + indiceControl).getId()%>" style="text-decoration: none">
                       <div class="card shadow" >                      
                       <img class="card-img-top" style="height: 179.84px;" src=<%=noticias.get(cards + indiceControl).getImagem()%> alt="Sem Imagem">                      
                            <div class="card-body text-dark" style="height: 325px;">

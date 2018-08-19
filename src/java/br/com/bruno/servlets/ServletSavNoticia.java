@@ -10,38 +10,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Bruno
- */
-@WebServlet(name = "ServletSaveNoticia", urlPatterns = {"/ServletSaveNoticia"})
-public class ServletSaveNoticia extends HttpServlet {
+@WebServlet(name = "ServletSavNoticia", urlPatterns = {"/ServletSavNoticia"})
+public class ServletSavNoticia extends HttpServlet {
 
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        
         Noticia noticia = new Noticia();
         noticia.setLegenda(request.getParameter("legenda"));
         noticia.setResumo(request.getParameter("resumo"));
         noticia.setDescricao(request.getParameter("descricao"));
-        noticia.setImagem(request.getParameter("imagem"));
-        Assunto a = new Assunto();
-        a.setId(Integer.parseInt(request.getParameter("assunto")));
-        noticia.setAssunto(a);
+        noticia.setImagem(request.getParameter("imagemLink"));
+        Assunto assunto = new Assunto();
         
-        NoticiaController nc = new NoticiaController();
-        if (nc.saveNoticia(noticia)) {
-            response.sendRedirect("index.jsp?mensagem=Salvo");
+        assunto.setId(Integer.parseInt(request.getParameter("assunto")));
+        noticia.setAssunto(assunto);
+        
+        NoticiaController assuntoCtr = new NoticiaController();
+        if (assuntoCtr.saveNoticia(noticia)) {
+            response.sendRedirect("index.jsp?mensagem=Salvo com sucesso");
         } else {        
-            response.sendRedirect("index.jsp?mensagem=Erro");                                
+            response.sendRedirect("index.jsp?mensagem=Erro ao salvar!!");                                
         }
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
     }
 
 }

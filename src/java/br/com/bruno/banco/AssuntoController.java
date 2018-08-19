@@ -15,49 +15,49 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Bruno
+ * @author Bruno Henrique Bosco Marques
  */
 public class AssuntoController {    
+    private Connection connection;
+    private PreparedStatement prepStatment;
+    private Statement statement;
+    private ResultSet resultSet;
     
-    public int getID() {
+    private int getID() {
         try {
-            Connection con = Conexao.getConexao();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT max(id) FROM assunto");
-            rs.first();
-            int id = rs.getInt("max(id)") + 1;  
+            setStatment("SELECT max(id) FROM assunto");
+            resultSet.first();
+            int id = resultSet.getInt("max(id)") + 1;  
             Conexao.FecharConexao();
             return id;         
-        } catch (SQLException e) {
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);
             return 0;
         }        
     }
     
     public void saveAssunto (String nome) {
-        try {
-           Connection con = Conexao.getConexao(); 
-           PreparedStatement pst = con.prepareStatement("INSERT INTO assunto (id,nome) VALUES (?,?)");
-           pst.setInt(1, getID());
-           pst.setString(2, nome);
-           pst.execute();            
-           Conexao.FecharConexao();           
-        } catch (SQLException e) {
-            System.out.println(e);           
+        try {            
+            setPreparedStatment("INSERT INTO assunto (id,nome) VALUES (?,?)");
+            prepStatment.setInt(1, getID());
+            prepStatment.setString(2, nome);
+            prepStatment.execute();            
+            Conexao.FecharConexao();           
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);           
         }
     }
     
     public Assunto getAssunto (int id) {        
         Assunto assunto = new Assunto();
         try {            
-            Connection con = Conexao.getConexao();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM assunto WHERE id = " + Integer.toString(id));            
-            rs.first();            
-            assunto.setId(rs.getInt("id"));
-            assunto.setNome(rs.getString("nome"));               
+            setStatment("SELECT * FROM assunto WHERE id = " + Integer.toString(id));
+            resultSet.first();            
+            assunto.setId(resultSet.getInt("id"));
+            assunto.setNome(resultSet.getString("nome"));               
             Conexao.FecharConexao();            
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);
         }
         return assunto;
     }
@@ -65,33 +65,51 @@ public class AssuntoController {
     public ArrayList<Assunto> getAssuntos () {
         ArrayList assuntos = new ArrayList<Assunto>();
         try {            
-            Connection con = Conexao.getConexao();
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM assunto");            
-            while (rs.next()) {                
+            setStatment("SELECT * FROM assunto");
+            
+            while (resultSet.next()) {                
                 Assunto a = new Assunto();
-                a.setId(rs.getInt("id"));
-                a.setNome(rs.getString("nome"));
-               assuntos.add(a);
+                a.setId(resultSet.getInt("id"));
+                a.setNome(resultSet.getString("nome"));
+                assuntos.add(a);
             }
+            
             Conexao.FecharConexao();
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);
         }
         return assuntos;
     }
     
     public Boolean delAssunto(String id) {
         try {
-            Connection con = Conexao.getConexao();
-            Statement st = con.createStatement();
-            st.execute("DELETE FROM assunto WHERE id = " + id);
+            connection = Conexao.getConexao();
+            statement = connection.createStatement();
+            statement.execute("DELETE FROM assunto WHERE id = " + id);                       
             return true;
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);
             return false;
+        }        
+    }
+    
+    private void setStatment(String query){
+       try {
+            connection = Conexao.getConexao();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(query);
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);
         }
-        
+    }
+    
+    private void setPreparedStatment(String prepareSQL){
+        try {
+            connection = Conexao.getConexao(); 
+            prepStatment = connection.prepareStatement(prepareSQL);
+        } catch (SQLException sqlEx) {
+            System.out.println(sqlEx);
+        }
     }
     
 }
